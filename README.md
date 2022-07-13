@@ -1,4 +1,4 @@
-# PKUAutoSubmit
+# PKUAutoSubmit 出入校
 PKU一键出入校备案小工具 v4.0 (2022.07.05)
 
 在原repo的基础上做了一些修改，现在可以自动申请出入校。
