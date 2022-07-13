@@ -58,6 +58,7 @@ def go_to_application_out(driver):
     WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, f'//button/span[contains(text(), "确定")]'))).click()
 
+
 def go_to_application_in(driver, userName, password):
     driver.back()
     time.sleep(0.5)
@@ -76,6 +77,7 @@ def go_to_application_in(driver, userName, password):
         driver.find_element_by_class_name('el-card__body').click()
         WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.CLASS_NAME, 'el-select')))
+
 
 def submit(driver):
     driver.find_element_by_xpath(
@@ -162,11 +164,15 @@ def fill_out(driver, config_dict):
     print('Done')
 
     driver.find_element(By.XPATH, f'//button/span[text()="保存 "]').click()
-    WebDriverWait(driver, 5).until(
-        EC.visibility_of_any_elements_located(
-            (By.XPATH, f'//button/span[contains(text(), "提交")]')))[-1].click()
-
-    print('填报完毕！')
+    if WebDriverWait(driver, 2).until(
+            EC.visibility_of_any_elements_located(
+                (By.CLASS_NAME, 'el-message--error'))):
+        print('已经有申请了，不能再次申请。')
+    else:
+        WebDriverWait(driver, 2).until(
+            EC.visibility_of_any_elements_located(
+                (By.XPATH, f'//button/span[contains(text(), "提交")]')))[-1].click()
+        print('填报完毕！')
 
 
 def run(driver, credentials, config_dict):
